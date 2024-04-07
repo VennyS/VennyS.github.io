@@ -1,0 +1,122 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: center;
+    min-height: 100vh;
+    background: #9B59B6;
+}
+
+a {
+    display: block;
+}
+.wrapper{
+    width: 450px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+.wrapper .header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+.header .icons{
+    display: flex;
+}
+
+.header .icons span{
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #878787;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+}
+.icons span:last-child{
+    margin-right: -10px;
+}
+.header .icons span:hover{
+    background: #f2f2f2;
+}
+.header .current-date{
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+
+.calendar{
+    padding: 20px;
+}
+
+.weeks span {
+    font-weight: 500;
+}
+
+.weeks, .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+}
+
+span.inactive, .days a {    
+    margin-top: 30px;
+}
+
+.days {
+    margin-bottom: 25px;
+}
+
+.days a {
+    color: rgb(51, 51, 51);
+    position: relative;
+}
+span.inactive {
+    color: rgb(170, 170, 170);
+}
+
+.days a, span {
+    font-size: 17.2px;
+    font-weight: 500;
+    z-index: 0;
+}
+
+.days a::before{
+    position: absolute;
+    content: "";
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background 0.3s ease;
+}
+
+.days a.active::before {
+    background-color: #9B59B6;
+}
+
+  .days a:not(.active):hover::before{
+    background: #f2f2f2;
+    transition: background 0.3s ease;
+  }
+  
+
+

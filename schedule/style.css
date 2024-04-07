@@ -1,0 +1,114 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: center;
+    min-height: 100vh;
+    background: #9B59B6;
+}
+
+.wrapper{
+    width: 450px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.header .icons{
+    display: flex;
+}
+
+.header {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    padding: 25px 30px 0px 18px;
+}
+
+.icon {
+    line-height: 2;
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #878787;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+}
+
+.header .icon:hover{
+    background: #f2f2f2;
+}
+
+.current-date {
+    font-weight: 600;
+}
+
+.info {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.hours-and-buttons {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.interval {
+    display: flex;
+    text-align: left;
+}
+
+.button-container {
+    flex: 1;
+    display: flex;
+}
+
+.interval-button {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    border-top: solid #9B59B6 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.interval-button.toggle {
+    background-color: #9B59B6;
+    opacity: 25%;
+    transition: background-color 0.3s;
+}
+
+.interval-button.active {
+    background-color: #9B59B6;
+    opacity: 75%;
+    transition: background-color 0.3s;
+}
+
+.interval:nth-last-child(2) > .button-container > .interval-button {
+    border-bottom: solid #9B59B6 1px;
+}
+
+.interval-text {
+    width: 50px;
+    padding-right: 4px;
+    margin-top: -9px;
+    font-size: 13px;
+    font-weight: 400;
+}
