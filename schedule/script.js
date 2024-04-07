@@ -1,3 +1,11 @@
+let tg = window.Telegram.WebApp;
+tg.MainButton.show();
+tg.expand();
+
+Telegram.WebApp.onEvent('mainButtonClicked', function(){
+	tg.sendData("some string that we need to send"); 
+});
+
 // Переменная для хранения контейнера, куда будем добавлять блоки
 const container = $('.hours-and-buttons');
 const monthText = $('.current-date');
