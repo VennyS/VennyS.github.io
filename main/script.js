@@ -11,7 +11,7 @@ for (var pair of urlParams.entries()) {
 
 var data;
 if ("schedule" in choosedDate) data = choosedDate["schedule"];
-data = localStorage.getItem("commonIntervals");
+else data = localStorage.getItem("commonIntervals");
 console.log(data);
 const daysTag = document.querySelector(".days"),
     currentDate = document.querySelector(".current-date"),
