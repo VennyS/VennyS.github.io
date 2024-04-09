@@ -10,9 +10,11 @@ for (var pair of urlParams.entries()) {
 }
 
 var data;
-if ("schedule" in choosedDate) data = choosedDate["schedule"];
-else data = localStorage.getItem("commonIntervals");
+if ("schedule" in choosedDate)
+    localStorage.setItem("commonIntervals", choosedDate["schedule"]);
+data = localStorage.getItem("commonIntervals");
 console.log(data);
+
 const daysTag = document.querySelector(".days"),
     currentDate = document.querySelector(".current-date"),
     prevNextIcon = document.querySelectorAll(".icons span");

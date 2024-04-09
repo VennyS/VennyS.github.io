@@ -44,13 +44,7 @@ const setDictionary = () => {
 };
 
 const getSchedule = () => {
-    if (
-        !(
-            data === null ||
-            data === undefined ||
-            JSON.stringify(data) === "null"
-        )
-    ) {
+    if (!(data === null || data === undefined || JSON.stringify(data) === "null")) {
         let foundDictionaries = findCurrentInData(data, choosedDate);
         foundDictionaries.forEach(function (foundDict) {
             var index = data.indexOf(foundDict);
@@ -71,12 +65,8 @@ const getSchedule = () => {
                 : intervals.next(".selected").eq(0);
             dict["startTime"] = $(startInterval).find(".interval-text").text();
 
-            let endInterval = $(startInterval)
-                .nextUntil(":not(.selected)")
-                .last();
-            dict["endTime"] = $(endInterval)
-                .find(".interval-button")
-                .attr("hour");
+            let endInterval = $(startInterval).nextUntil(":not(.selected)").last();
+            dict["endTime"] = $(endInterval).find(".interval-button").attr("hour");
 
             intervals = endInterval.nextUntil(".selected");
             result.push(JSON.parse(JSON.stringify(dict)));
@@ -144,9 +134,7 @@ const setUpTextAndColors = (start, end, button) => {
 
 // Теперь у вас есть все параметры в виде объекта paramsObject
 $(".current-date").text(
-    `${choosedDate["day"]} ${monthInclined[choosedDate["name"]]} ${
-        choosedDate["year"]
-    }`
+    `${choosedDate["day"]} ${monthInclined[choosedDate["name"]]} ${choosedDate["year"]}`
 );
 
 // Цикл для создания 24 интервалов
@@ -199,7 +187,7 @@ const findCurrentInData = (dictArray, dictDate) => {
     var foundDictionaries = dictArray.filter(function (dictionary) {
         // Проверяем, совпадают ли все заданные пары ключ-значение
         return Object.keys(searchPairs).every(function (key) {
-            return dictionary[key] === searchPairs[key];
+            return dictionary[key] == searchPairs[key];
         });
     });
     return foundDictionaries;
@@ -255,10 +243,7 @@ $(".interval-button").click(function () {
         firstButtonId = id;
         $(this).addClass("toggle");
         $(this).text(
-            `Доступен с ${$(this)
-                .closest(".interval")
-                .find(".interval-text")
-                .text()}...`
+            `Доступен с ${$(this).closest(".interval").find(".interval-text").text()}...`
         );
     } else {
         if (firstButtonId == id) return;
