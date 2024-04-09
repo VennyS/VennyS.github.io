@@ -9,66 +9,87 @@ for (var pair of urlParams.entries()) {
     choosedDate[pair[0]] = pair[1];
 }
 
-const data = localStorage.getItem('commonIntervals');
+var data;
+if ("schedule" in choosedDate) data = choosedDate["schedule"];
+data = localStorage.getItem("commonIntervals");
 console.log(data);
 const daysTag = document.querySelector(".days"),
-currentDate = document.querySelector(".current-date"),
-prevNextIcon = document.querySelectorAll(".icons span");
+    currentDate = document.querySelector(".current-date"),
+    prevNextIcon = document.querySelectorAll(".icons span");
 
 // getting new date, current year and month
 let date = new Date(),
-currYear = 'year' in choosedDate ? parseInt(choosedDate['year']) : date.getFullYear();
-currMonth = 'month' in choosedDate ? parseInt(choosedDate['month']) : date.getMonth();
+    currYear = "year" in choosedDate ? parseInt(choosedDate["year"]) : date.getFullYear();
+currMonth = "month" in choosedDate ? parseInt(choosedDate["month"]) : date.getMonth();
 
 // storing full name of all months in array
 const months = [
-    'Январь', 'Февраль', 'Март', 'Апрель',
-    'Май', 'Июнь', 'Июль', 'Август',
-    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+    "Январь",
+    "Февраль",
+    "Март",
+    "Апрель",
+    "Май",
+    "Июнь",
+    "Июль",
+    "Август",
+    "Сентябрь",
+    "Октябрь",
+    "Ноябрь",
+    "Декабрь",
 ];
 
-
 const asignClick = () => {
-    $('a').click(function(e){
+    $("a").click(function (e) {
         // Удаляем обработчик события beforeunload
-        window.removeEventListener('beforeunload', handleBeforeUnload);
+        window.removeEventListener("beforeunload", handleBeforeUnload);
     });
-}
+};
 
 const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
-    lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
-    lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
-    lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
+        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
+        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
     let spanTag = "";
 
-    for (let i = firstDayofMonth; i > 0; i--) { // creating li of previous month last days
+    for (let i = firstDayofMonth; i > 0; i--) {
+        // creating li of previous month last days
         spanTag += `<span class="inactive">${lastDateofLastMonth - i + 1}</span>`;
     }
 
-    for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+    for (let i = 1; i <= lastDateofMonth; i++) {
+        // creating li of all days of current month
         // adding active class to li if the current day, month, and year matched
-        let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
-                     && currYear === new Date().getFullYear() ? "active" : "";
+        let isToday =
+            i === date.getDate() &&
+            currMonth === new Date().getMonth() &&
+            currYear === new Date().getFullYear()
+                ? "active"
+                : "";
         spanTag += `<a class="${isToday}" href="schedule.html?&year=${currYear}&month=${currMonth}&day=${i}&name=${months[currMonth]}"> ${i} </a>`;
     }
 
-    for (let i = lastDayofMonth; i < 6; i++) { // creating span of next month first days
-        spanTag += `<span class="inactive">${i - lastDayofMonth + 1}</span>`
+    for (let i = lastDayofMonth; i < 6; i++) {
+        // creating span of next month first days
+        spanTag += `<span class="inactive">${i - lastDayofMonth + 1}</span>`;
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
     daysTag.innerHTML = spanTag;
     asignClick();
-}
+};
 renderCalendar();
 
-prevNextIcon.forEach(icon => { // getting prev and next icons
-    icon.addEventListener("click", () => { // adding click event on both icons
+prevNextIcon.forEach((icon) => {
+    // getting prev and next icons
+    icon.addEventListener("click", () => {
+        // adding click event on both icons
         // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
         let today = new Date();
-        if (new Date(currYear, icon.id === "prev" ? currMonth : currMonth + 2, 0) < today) return;
+        if (new Date(currYear, icon.id === "prev" ? currMonth : currMonth + 2, 0) < today)
+            return;
         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-        if(currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+        if (currMonth < 0 || currMonth > 11) {
+            // if current month is less than 0 or greater than 11
             // creating a new date of current year & month and pass it as date value
             date = new Date(currYear, currMonth, new Date().getDate());
             currYear = date.getFullYear(); // updating current year with new date year
@@ -76,7 +97,7 @@ prevNextIcon.forEach(icon => { // getting prev and next icons
         } else {
             date = new Date(); // pass the current date as date value
         }
-         renderCalendar();
+        renderCalendar();
         // calling renderCalendar function
     });
 });
@@ -88,4 +109,4 @@ function handleBeforeUnload(event) {
 }
 
 // Добавляем обработчик события beforeunload
-window.addEventListener('beforeunload', handleBeforeUnload);
+window.addEventListener("beforeunload", handleBeforeUnload);

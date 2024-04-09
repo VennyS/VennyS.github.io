@@ -1,7 +1,7 @@
 /* Import Google font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,35 +9,35 @@
     text-decoration: none;
 }
 
-body{
+body {
     display: flex;
     align-items: center;
     padding: 0 10px;
     justify-content: center;
     min-height: 100vh;
-    background: #9B59B6;
+    background: #9b59b6;
 }
 
 a {
     display: block;
 }
-.wrapper{
+.wrapper {
     width: 450px;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
-.wrapper .header{
+.wrapper .header {
     display: flex;
     align-items: center;
     padding: 25px 30px 10px;
     justify-content: space-between;
 }
-.header .icons{
+.header .icons {
     display: flex;
 }
 
-.header .icons span{
+.header .icons span {
     height: 38px;
     width: 38px;
     margin: 0 1px;
@@ -49,18 +49,18 @@ a {
     user-select: none;
     border-radius: 50%;
 }
-.icons span:last-child{
+.icons span:last-child {
     margin-right: -10px;
 }
-.header .icons span:hover{
+.header .icons span:hover {
     background: #f2f2f2;
 }
-.header .current-date{
+.header .current-date {
     font-size: 1.45rem;
     font-weight: 500;
 }
 
-.calendar{
+.calendar {
     padding: 20px;
 }
 
@@ -68,17 +68,20 @@ a {
     font-weight: 500;
 }
 
-.weeks, .days {
+.weeks,
+.days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
 }
 
-.weeks > span:last-child, .weeks > span:nth-last-child(2)  {
+.weeks > span:last-child,
+.weeks > span:nth-last-child(2) {
     color: red;
 }
 
-span.inactive, .days a {    
+span.inactive,
+.days a {
     margin-top: 30px;
 }
 
@@ -94,13 +97,14 @@ span.inactive {
     color: rgb(170, 170, 170);
 }
 
-.days a, span {
+.days a,
+span {
     font-size: 17.2px;
     font-weight: 500;
     z-index: 0;
 }
 
-.days a::before{
+.days a::before {
     position: absolute;
     content: "";
     height: 40px;
@@ -114,15 +118,14 @@ span.inactive {
 }
 
 .days a.active::before {
-    background-color: #9B59B6;
+    background-color: #9b59b6;
 }
 
-.days a:not(.active):hover::before{
-background: #f2f2f2;
-transition: background 0.3s ease;
+.days a:not(.active):hover::before {
+    background: #f2f2f2;
+    transition: background 0.3s ease;
 }
-  
+
 a:last-child {
     color: red;
 }
-
