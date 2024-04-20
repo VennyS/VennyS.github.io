@@ -17,7 +17,7 @@ tg.MainButton.show();
 tg.expand();
 
 Telegram.WebApp.onEvent("mainButtonClicked", function () {
-    tg.sendData(sendDataJSON());
+    tg.close();
 });
 
 function uniqueDicts(array1, array2) {
@@ -68,6 +68,7 @@ const getSchedule = () => {
             let endInterval = $(startInterval).nextUntil(":not(.selected)").last();
             dict["endTime"] = $(endInterval).find(".interval-button").attr("hour");
 
+            console.log(choosedDate);
             intervals = endInterval.nextUntil(".selected");
             result.push(JSON.parse(JSON.stringify(dict)));
         } while ($(intervals).next().last().hasClass("selected"));

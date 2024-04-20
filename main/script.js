@@ -9,11 +9,47 @@ for (var pair of urlParams.entries()) {
     choosedDate[pair[0]] = pair[1];
 }
 
-var data;
-if ("schedule" in choosedDate)
-    localStorage.setItem("commonIntervals", choosedDate["schedule"]);
-data = localStorage.getItem("commonIntervals");
-console.log(data);
+function getIntervals() {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        var telegramid = localStorage.getItem("telegramid"); // Получаем telegramid из локального хранилища
+        var url = "http://127.0.0.1:5000/?telegramid=" + encodeURIComponent(telegramid); // Добавляем telegramid к URL-адресу запроса
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    resolve(response);
+                } else {
+                    reject(xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    });
+}
+
+if (choosedDate.hasOwnProperty("telegramid")) {
+    // Если ключ присутствует, записываем его значение в localStorage
+    localStorage.setItem("telegramid", choosedDate["telegramid"]);
+}
+let data = localStorage.getItem("commonIntervals");
+// Проверяем, пуст ли элемент
+if (data === null || data === undefined || data === "") {
+    getIntervals()
+        .then(function (data) {
+            localStorage.setItem("commonIntervals", data);
+            console.log(data);
+        })
+        .catch(function (error) {
+            console.error("Ошибка:", error);
+        });
+}
+
+Telegram.WebApp.onEvent("mainButtonClicked", function () {
+    sendIntervals(data);
+    tg.close();
+});
 
 const daysTag = document.querySelector(".days"),
     currentDate = document.querySelector(".current-date"),
@@ -41,7 +77,7 @@ const months = [
 ];
 
 const asignClick = () => {
-    $("a").click(function (e) {
+    $("a").click(function () {
         // Удаляем обработчик события beforeunload
         window.removeEventListener("beforeunload", handleBeforeUnload);
     });
@@ -100,14 +136,35 @@ prevNextIcon.forEach((icon) => {
             date = new Date(); // pass the current date as date value
         }
         renderCalendar();
-        // calling renderCalendar function
     });
 });
 
-// Функция-обработчик события beforeunload
-function handleBeforeUnload(event) {
-    // Очищаем локальное хранилище
-    localStorage.clear();
+function handleBeforeUnload() {
+    if (navigator.sendBeacon) {
+        data = [
+            localStorage.getItem("telegramid"),
+            ...JSON.parse(localStorage.getItem("commonIntervals")),
+        ];
+
+        for (let i = 1; i < data.length; i++) {
+            // Преобразовываем строку в число, увеличиваем на 1, затем снова преобразовываем в строку
+            data[i].month = String(Number(data[i].month) + 1);
+        }
+
+        navigator.sendBeacon("http://127.0.0.1:5000/", JSON.stringify(data));
+        console.log("Данные успешно отправлены с помощью sendBeacon");
+        localStorage.clear(); // Очищаем localStorage после успешной отправки
+    } else {
+        // Если sendBeacon не поддерживается, используем sendIntervals()
+        sendIntervals(data)
+            .then(function (response) {
+                console.log("Данные успешно отправлены:", response);
+                localStorage.clear(); // Очищаем localStorage после успешной отправки
+            })
+            .catch(function (error) {
+                console.error("Ошибка при отправке данных:", error);
+            });
+    }
 }
 
 // Добавляем обработчик события beforeunload
